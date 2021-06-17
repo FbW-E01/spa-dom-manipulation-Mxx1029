@@ -27,3 +27,59 @@ const books = [
     img: "https://eloquentjavascript.net/img/cover.jpg"
   }
 ];
+
+const list = document.querySelector(".book-list");
+
+// switch first and last names of the authors in the books array
+books.map((book) => {
+  const writer = book.author.split(" ").reverse().join(", ");
+  book.author = writer;
+});
+
+// sort the books array alphabetically by author
+books.sort((a, b) => {
+  if (a.author > b.author) { return 1 }
+  else { return -1 };
+});
+
+// loop through books array and add them to the DOM
+books.forEach((book) => {
+
+  const li = document.createElement("li");
+  li.classList.add("card", "mb-3", "mt-3");
+  li.style.width = "14rem";
+  list.appendChild(li);
+
+  const img = document.createElement("img");
+  img.src = book.img;
+  img.style.height = "60%";
+  img.style.objectFit = "cover";
+  img.classList.add("card-img-top");
+  li.appendChild(img);
+
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  li.appendChild(cardBody);
+
+  const title = document.createElement("h5");
+  title.innerText = book.title;
+  title.classList.add("card-title");
+  cardBody.appendChild(title);
+
+  const author = document.createElement("p");
+  author.innerText = book.author;
+  author.classList.add("card-text");
+  cardBody.appendChild(author);
+
+  const cardFooter = document.createElement("div");
+  cardFooter.classList.add("card-footer", "text-muted");
+  li.appendChild(cardFooter);
+
+  const pill = document.createElement("span");
+  pill.classList.add("badge", "badge-pill", (book.alreadyRead ? "badge-success" : "badge-secondary"))
+  pill.innerText = book.alreadyRead ? "Read" : "To read";
+  pill.style.fontStyle = "italic";
+  pill.style.float = "right";
+  cardFooter.appendChild(pill);
+
+})
